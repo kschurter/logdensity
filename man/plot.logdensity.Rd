@@ -17,11 +17,11 @@
 
 \item{ylab}{a title for the y axis}
 
-\item{...}{further arguments passed to plot.default}
+\item{...}{further arguments passed to \code{plot.default}}
 }
 \description{
 Plot density and log-density estimates
 }
 \seealso{
-\code{\link[graphics]{plot.default}}, \code{\link[stats]{integrate}}
+\code{\link[graphics]{plot.default}}
 }

@@ -16,8 +16,8 @@ evalkernel(
 \item{kernel}{character string specifying name of kernel}
 }
 \value{
-array with same dimensions as u containing kernel evaluated at u.
-Note: NA values of u evaluate to 0.
+array with same dimensions as \code{u} containing kernel evaluated at \code{u}.
+Note: \code{NA} values of \code{u} evaluate to 0.
 }
 \description{
 Evaluate a kernel function

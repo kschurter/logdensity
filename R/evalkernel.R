@@ -3,8 +3,8 @@
 #' @param u numeric array
 #' @param kernel character string specifying name of kernel
 #'
-#' @return array with same dimensions as u containing kernel evaluated at u.
-#' Note: NA values of u evaluate to 0.
+#' @return array with same dimensions as \code{u} containing kernel evaluated at \code{u}.
+#' Note: \code{NA} values of \code{u} evaluate to 0.
 #' 
 #' @export
 evalkernel <- function(u, kernel = c("epanechnikov","gaussian", "triweight", "uniform", "triangle", "cosinus", "quartic")){

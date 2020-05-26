@@ -55,8 +55,8 @@ warning.}
 \item{logf}{logical indicating whether the log-density should be compute,
 in addition to its derivative(s).}
 
-\item{mc.cores}{integer number of cores to use with mcmapply. If equal to 1
-(default), mapply will be used to loop over \code{x}, instead.}
+\item{mc.cores}{integer number of cores to use with \code{mcmapply}. If equal to 1
+(default), \code{mapply} will be used to loop over \code{x}, instead.}
 
 \item{...}{Further arguments supplied to \code{g} and \code{dg}}
 
@@ -92,5 +92,5 @@ plot(ld)
 Pinkse, J. and Schurter, K. (2020) "Estimates of derivatives of (log) densities and related objects."
 }
 \seealso{
-\code{\link[parallel]{mcmapply}}
+\code{\link{mapply}}, \code{\link[parallel]{mcmapply}}, \code{\link[stats]{integrate}}
 }

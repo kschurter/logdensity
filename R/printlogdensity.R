@@ -4,7 +4,7 @@
 #' @param digits minimal number of significant digits
 #' @param max approximate max number of entries to be printed
 #' @param quote logical, indicating whether strings should be printed with surrounding quotes
-#' @param ... further arguments passed to print()
+#' @param ... further arguments passed to \code{print.default}
 #'
 #' @return invisibly returns x
 #' @rdname print.logdensity

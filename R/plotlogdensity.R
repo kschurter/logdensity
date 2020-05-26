@@ -5,12 +5,12 @@
 #' @param type what type of plot should be drawn
 #' @param xlab a title for the x axis
 #' @param ylab a title for the y axis
-#' @param ... further arguments passed to plot.default
+#' @param ... further arguments passed to \code{plot.default}
 #' 
 #' @importFrom graphics plot.default
 #' @method plot logdensity
 #' @rdname plot.logdensity
-#' @seealso \code{\link[graphics]{plot.default}}, \code{\link[stats]{integrate}}
+#' @seealso \code{\link[graphics]{plot.default}}
 #' @export
 plot.logdensity <- function(x, density = FALSE, type = "l", xlab, ylab, ...){
   if(missing(xlab)){

@@ -26,8 +26,8 @@
 #' warning.
 #' @param logf logical indicating whether the log-density should be compute,
 #' in addition to its derivative(s).
-#' @param mc.cores integer number of cores to use with mcmapply. If equal to 1
-#' (default), mapply will be used to loop over \code{x}, instead.
+#' @param mc.cores integer number of cores to use with \code{mcmapply}. If equal to 1
+#' (default), \code{mapply} will be used to loop over \code{x}, instead.
 #' @param ... further arguments supplied to \code{g} and \code{dg}
 #'
 #' @return an object of class \code{logdensity} which inherits from \code{matrix}.
@@ -46,7 +46,7 @@
 #' plot(ld)
 #' 
 #' @importFrom parallel mcmapply
-#' @seealso \code{\link[parallel]{mcmapply}}
+#' @seealso \code{\link{mapply}}, \code{\link[parallel]{mcmapply}}, \code{\link[stats]{integrate}}
 #' 
 #' @references Pinkse, J. and Schurter, K. (2020) "Estimates of derivatives of (log) densities and related objects."
 #' 

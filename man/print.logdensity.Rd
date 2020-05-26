@@ -21,7 +21,7 @@
 
 \item{quote}{logical, indicating whether strings should be printed with surrounding quotes}
 
-\item{...}{further arguments passed to print()}
+\item{...}{further arguments passed to \code{print.default}}
 }
 \value{
 invisibly returns x
