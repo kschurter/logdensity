@@ -1,0 +1,75 @@
+#' Estimate the derivatives of the log-density and the log-density itself
+#'
+#' @param data numeric vector of observations
+#' @param x points at which to estimate (if shorter than h, recycled to length
+#' of h)
+#' @param h bandwidth (if shorter than x, recycled to the length of x)
+#' @param g function u, zl, and zr that must be equal to an S-length vector of
+#' 0's at zl = max((minx-x)/h,-1) and zr = min((maxx-x),1), where S is the order
+#' of the local polynomial approximation to the log-density. Function must be
+#' vectorized so that g(u, zl, zr) returns a matrix that is length(u) by S.
+#' @param dg function that evaluates derivative of g with respect to u. Must be
+#' vectorized and return a matrix that is length(u) by S.
+#' @param m kernel function used to compute the density. Can be a function,
+#' symbol, or character string that matches the name of a function or one of the
+#' kernels allowed in evalkernel. If m == "epanechnikov" and the polynomial
+#' order is 1, an exact solution is computed. Otherwise, the estimate of the 
+#' log-density involves numerical integration.
+#' @param minx lower bound of support of x
+#' @param maxx upper bound of support of x
+#' @param logf logical indicating whether the log-density should be compute,
+#' in addition to its derivative(s).
+#' @param exact logical indicating whether an exact solution should be used 
+#' (if available) or numerical integration. Exact solution currently only
+#' available with kernel and local linear approximation.
+#' @param ... Further arguments supplied to g and dg
+#'
+#' @return A numeric vector containing the log-density (if logf == TRUE) and its derivatives
+
+logdensity.fit <- function(data, x, h, g, dg, m, minx, maxx, logf, exact, ...){
+  zl <- min((x - minx) / h, 1)
+  zr <- min((maxx - x) / h, 1)
+  if(any(g(-zl, zl, zr,...) != 0) || anyNA(g(-zl,zl,zr,...))){
+    stop(gettextf("g(%g) must equal 0 for estimating density at x=%g with bandwidth %g",-zl, x, h), domain = NA)
+  }
+  if(any(g(zr, zl, zr,...) != 0) || anyNA(g(-zl,zl,zr,...))){
+    stop(gettextf("g(%g) must equal 0 for estimating density at x=%g with bandwidth %g",zr, x, h), domain = NA)
+  }
+  u <- (data - x) / h
+  u <- u[(u <= zr) & (u >= -zl)]
+  gu <- g(u, zl, zr, ...)
+  S <- ncol(gu)
+  if(S > length(u)){
+    warning(gettextf("Can't do it. Only %d non-missing observations available to estimate %d derivatives at %g using bandwidth %g.", length(u), S, x, h))
+    return(rep(NA, S + 1))
+  }
+  dgu <- dg(u, zl, zr, ...)
+  R <- -1 * crossprod(gu, outer(u, 0:(S-1), `^`))
+  if(!all(is.finite(R))){
+    stop("Encountered a non-finite value of g", domain = NA)
+  }
+  l <-  colSums(dgu) / h
+  if(!all(is.finite(l))){
+    stop("Encountered a non-finite value of dg", domain = NA)
+  }
+  beta <- numeric(S + 1)
+  beta[-1] <- drop(solve(R, l)) * factorial(0:(S-1)) / h^(0:(S-1))
+  if(logf){
+    if(S == 1 & exact){ # Use an exact solution for denominator instead of numerical integration
+      num <- 0.75 * sum(1-u^2) / length(data) 
+      fn <- function(u) (exp(beta[-1] * h * u) * (2 + beta[-1] * h * u * (-2 + beta[-1] * h * u)))/(beta[-1] * h)^3
+      den <- 0.75 * (fn(-1 * zl) - fn(zr) + (exp(zr * beta[-1] * h) - exp(-1*zl * beta[-1] * h))/(beta[-1] * h))
+      # Exact solution for S=2 and "epanechnikov"
+      # fn <- function(u, b1, b2){
+      #     -0.375 * exp(-b1^2 / 2 / b2) * ( 2 * exp((b1 + h * u * b2)^2 / (2 * b2)) * sqrt(b2) * (-b1 + h * u * b2) + sqrt(2 * pi) * (b1^2-b2 * (1 + h^2 * b2)) * erfi((b1 + h * u * b2) / sqrt(2 * b2)) ) / (h^3 * b2^(2.5))
+      # }
+      # den <- diff(fn(c(-zl, zr), beta[2], beta[3]+0i))
+    }else{ # Use numerical integration
+      num <- sum(m(u)) / length(data)
+      den <-  tryCatch(integrate(function(w) m(w) * exp( outer(w * h, 1:S, `^`) %*% (beta[-1] / factorial(1:S))), lower = -1*zl, upper = zr)$value,
+                       error = function(e) {warning(gettextf("Numerical integration failed at x=%g. Returning NA for log-density. Derivative estimates still valid. Error message from integrate(): %s", x, e$message)); return(NA)})
+    }
+    beta[1] <- log(num) - log(den) - log(h)
+  }
+  return(beta)
+}

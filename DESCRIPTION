@@ -1,0 +1,16 @@
+Package: logdensity
+Type: Package
+Title: Estimate the (Logarithm) of the Density and its Derivatives
+Version: 0.1.0
+Author: Joris Pinkse and Karl Schurter 
+Maintainer: Karl Schurter <kschurter@psu.edu>
+Description: This package contains functions that estimate the logarithm of an unknown density function from iid data.
+    The estimation strategy is based on a local polynomial appoximation to the log-density. The estimates behave well
+    near the boundary of the support of the density and can be guaranteed to be nonnegative. Details can be found in
+    Pinske and Schurter (2020) "Estimates of derivatives of (log) densities and related objects."
+Imports:
+    parallel
+License: GNU General Public License Version 3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.0
