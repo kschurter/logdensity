@@ -1,15 +1,26 @@
 #' Plot density and log-density estimates
 #'
-#' @param z a logdensity object
-#' @param main an overall title for the plots
-#' @param xlab a title for the x axes
+#' @param x a logdensity object
+#' @param density logical indicating whether to plot density or log-density
 #' @param type what type of plot should be drawn
-#' @param ... further arguments passed to plot
+#' @param xlab a title for the x axis
+#' @param ylab a title for the y axis
+#' @param ... further arguments passed to plot.default
 #' 
+#' @importFrom graphics plot.default
+#' @method plot logdensity
+#' @rdname plot.logdensity
+#' @seealso \code{\link[graphics]{plot.default}}, \code{\link[stats]{integrate}}
 #' @export
-plot.logdensity <- function(z, main = NULL, xlab = gettextf("n = %g", z$n), type = "l",...){
-  par(mfrow = c(1,2))
-  plot.default(z$x, z$logdensity[1,], main = main, xlab = xlab, ylab = "Log-density", type = type,...)
-  plot.default(z$x, exp(z$logdensity[1,]), main = main, xlab = xlab, ylab = "Density", type = type,...)
+plot.logdensity <- function(x, density = FALSE, type = "l", xlab, ylab, ...){
+  if(missing(xlab)){
+    h <- attr(x, "h")
+    xlab <- paste("n: ", attr(x,"n"), "  bandwidth: ", if(length(h) == 1L) h else "variable")
+  }
+  if(missing(ylab)){
+    ylab <- if(density) "Density" else "Log-density"
+  }
+  y <- if(density) exp(x[1, ]) else x[1, ]
+  plot.default(attr(x, "x"), y, xlab = xlab, ylab = ylab, type = type, ...)
   invisible(NULL)
 }

@@ -1,46 +1,54 @@
 #' A local polynomial log-density estimator
 #'
+#' \code{logdensity.fit} is intended to be called from within
+#' \code{logdensity}, after performing basic argument verification. Use
+#' caution when calling \code{logdensity.fit} directly.
+#'
 #' @param data numeric vector of observations
 #' @param x points at which to estimate (if shorter than h, recycled to length
 #' of h)
 #' @param h bandwidth (if shorter than x, recycled to the length of x)
-#' @param g function u, zl, and zr that must be equal to an S-length vector of
-#' 0's at zl = max((minx-x)/h,-1) and zr = min((maxx-x),1), where S is the order
+#' @param g function of \code{u}, \code{zl}, and \code{zr} that must be equal to an \code{S}-length vector of
+#' 0's at \code{zl = max((minx-x)/h,-1)} and \code{zr = min((maxx-x),1)}, where \code{S} is the order
 #' of the local polynomial approximation to the log-density. Function must be
-#' vectorized so that g(u, zl, zr) returns a matrix that is length(u) by S.
-#' @param dg function that evaluates derivative of g with respect to u. Must be
-#' vectorized and return a matrix that is length(u) by S.
+#' vectorized so that \code{g(u, zl, zr)} returns a matrix that is \code{length(u)} by \code{S}.
+#' @param dg function that evaluates derivative of \code{g} with respect to \code{u}. Must be
+#' vectorized and return a matrix that is \code{length(u)} by \code{S}.
 #' @param m kernel function used to compute the density. Can be a function,
 #' symbol, or character string that matches the name of a function or one of the
-#' kernels allowed in evalkernel. If m == "epanechnikov" and the polynomial
+#' kernels allowed in evalkernel. If \code{m == "epanechnikov"} and the polynomial
 #' order is 1, an exact solution is computed. Otherwise, the estimate of the 
 #' log-density involves numerical integration.
-#' @param minx lower bound of support of x
-#' @param maxx upper bound of support of x
+#' @param minx lower bound of support of \code{x}
+#' @param maxx upper bound of support of \code{x}
 #' @param S degree of polynomial expansion of log-density to be used with
-#' default g. If user supplies g and dg, this argument is ignored without
+#' default \code{g}. If user supplies \code{g} and \code{dg}, this argument is ignored without
 #' warning.
 #' @param logf logical indicating whether the log-density should be compute,
 #' in addition to its derivative(s).
 #' @param mc.cores integer number of cores to use with mcmapply. If equal to 1
-#' (default), mapply will be used to loop over x, instead.
-#' @param ... further arguments supplied to g and dg
+#' (default), mapply will be used to loop over \code{x}, instead.
+#' @param ... further arguments supplied to \code{g} and \code{dg}
 #'
-#' @return an object of class "logdensity," which is a list containing
-#' logdensity   matrix of estimated log-densities (if logf=TRUE) and derivatives
-#' x            a vector of points at which the estimates were computed
-#' n            the number of non-missing observations used in estimation
-#' h            the bandwidth(s) used
-#' call         the matched call
+#' @return an object of class \code{logdensity} which inherits from \code{matrix}.
+#'     The \code{S+1} by \code{length(x)} matrix of estimated log-densities (\code{NA} unless \code{logf}
+#'     is \code{TRUE}) and derivatives has the following additional attributes:
+#'     \code{x}       vector of points at which the estimates were computed
+#'     \code{n}       number of non-missing observations used in estimation
+#'     \code{h}       bandwidth(s) used
+#'     \code{call}    matched call
 #'
 #' @examples
 #' dat <- rchisq(n = 100, df = 2)
 #' x <- seq(from = 0, to = 2, length.out = 20)
-#' logdensity(data = dat, x = x, h = 0.5, m = "epanechnikov", minx = 0, S = 1, logf = TRUE)
-#' print(logdensity)
-#' plot(logdensity)
+#' ld <- logdensity(data = dat, x = x, h = 0.5, m = "epanechnikov", minx = 0, S = 1, logf = TRUE)
+#' print(ld)
+#' plot(ld)
 #' 
 #' @importFrom parallel mcmapply
+#' @seealso \code{\link[parallel]{mcmapply}}
+#' 
+#' @references Pinkse, J. and Schurter, K. (2020) "Estimates of derivatives of (log) densities and related objects."
 #' 
 #' @export
 
@@ -80,10 +88,10 @@ logdensity <- function(data, x, h, g, dg, m = "epanechnikov", minx = -Inf, maxx 
     dg <- match.fun(dg)
   }
   kernchoices <- c("epanechnikov", "gaussian", "triweight", "uniform", "triangle", "cosinus", "quartic")
-  kern <- pmatch(as.character(substitute(m)), choices, nomatch = 0L)
+  kern <- pmatch(as.character(substitute(m)), kernchoices, nomatch = 0L)
   if(logf){
     m <- if(kern){
-      function(u) evalkernel(u, choices[kern])
+      function(u) evalkernel(u, kernchoices[kern])
     }else{
       match.fun(m)
     }
@@ -96,7 +104,8 @@ logdensity <- function(data, x, h, g, dg, m = "epanechnikov", minx = -Inf, maxx 
     }
   }
   cl <- match.call()
-  if((length(x) > 1) || (length(h) > 1)){
+  numCol <- max(length(x), length(h))
+  if(numCol > 1){
     if(mc.cores > 1L){
         ld <- parallel::mcmapply(FUN = logdensity.fit, x = x, h = h, MoreArgs = list(data = data, g = g, dg = dg, m = m, minx = minx, maxx = maxx, logf = logf, exact = (kern==1L),...), SIMPLIFY = TRUE, mc.cores = mc.cores)
     }else{
@@ -104,9 +113,7 @@ logdensity <- function(data, x, h, g, dg, m = "epanechnikov", minx = -Inf, maxx 
     }
   }else{
     ld <- logdensity.fit(data = data, x = x, h = h, g = g, dg = dg, m = m, minx = minx, maxx = maxx, logf = logf, exact = (kern==1L), ...)
-    ld <- as.matrix(ld)
   }
-  z <- list(logdensity = ld, x = x, n = length(data), h = h, call = cl)
-  class(z) <- "logdensity"
+  z <- structure(ld, x = x, n = length(data), h = h, call = cl, dim = c(S+1, numCol), class = c("logdensity", "matrix"))
   return(z)
 }

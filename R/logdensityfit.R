@@ -4,27 +4,33 @@
 #' @param x points at which to estimate (if shorter than h, recycled to length
 #' of h)
 #' @param h bandwidth (if shorter than x, recycled to the length of x)
-#' @param g function u, zl, and zr that must be equal to an S-length vector of
-#' 0's at zl = max((minx-x)/h,-1) and zr = min((maxx-x),1), where S is the order
+#' @param g function of \code{u}, \code{zl}, and \code{zr} that must be equal to an \code{S}-length vector of
+#' 0's at \code{zl = max((minx-x)/h,-1)} and \code{zr = min((maxx-x),1)}, where \code{S} is the order
 #' of the local polynomial approximation to the log-density. Function must be
-#' vectorized so that g(u, zl, zr) returns a matrix that is length(u) by S.
-#' @param dg function that evaluates derivative of g with respect to u. Must be
-#' vectorized and return a matrix that is length(u) by S.
+#' vectorized so that \code{g(u, zl, zr)} returns a matrix that is \code{length(u)} by \code{S}.
+#' @param dg function that evaluates derivative of \code{g} with respect to \code{u}. Must be
+#' vectorized and return a matrix that is \code{length(u)} by \code{S}.
 #' @param m kernel function used to compute the density. Can be a function,
 #' symbol, or character string that matches the name of a function or one of the
-#' kernels allowed in evalkernel. If m == "epanechnikov" and the polynomial
+#' kernels allowed in evalkernel. If \code{m == "epanechnikov"} and the polynomial
 #' order is 1, an exact solution is computed. Otherwise, the estimate of the 
 #' log-density involves numerical integration.
-#' @param minx lower bound of support of x
-#' @param maxx upper bound of support of x
+#' @param minx lower bound of support of \code{x}
+#' @param maxx upper bound of support of \code{x}
 #' @param logf logical indicating whether the log-density should be compute,
 #' in addition to its derivative(s).
 #' @param exact logical indicating whether an exact solution should be used 
 #' (if available) or numerical integration. Exact solution currently only
 #' available with kernel and local linear approximation.
-#' @param ... Further arguments supplied to g and dg
+#' @param ... Further arguments supplied to \code{g} and \code{dg}
 #'
-#' @return A numeric vector containing the log-density (if logf == TRUE) and its derivatives
+#' @return A numeric vector containing the log-density (if \code{logf == TRUE}) and its derivatives
+#' 
+#' @rdname logdensity
+#' 
+#' @importFrom stats integrate
+#' 
+#' @export
 
 logdensity.fit <- function(data, x, h, g, dg, m, minx, maxx, logf, exact, ...){
   zl <- min((x - minx) / h, 1)

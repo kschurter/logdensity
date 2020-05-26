@@ -2,21 +2,26 @@
 % Please edit documentation in R/plotlogdensity.R
 \name{plot.logdensity}
 \alias{plot.logdensity}
-\title{Print function for objects of class "logdensity"}
+\title{Plot density and log-density estimates}
 \usage{
-\method{plot}{logdensity}(z, main = NULL, xlab = gettextf("n = \%g", z$n), type = "l", ...)
+\method{plot}{logdensity}(x, density = FALSE, type = "l", xlab, ylab, ...)
 }
 \arguments{
-\item{z}{a logdensity object}
+\item{x}{a logdensity object}
 
-\item{main}{an overall title for the plots}
-
-\item{xlab}{a title for the x axes}
+\item{density}{logical indicating whether to plot density or log-density}
 
 \item{type}{what type of plot should be drawn}
 
-\item{...}{further arguments passed to plot}
+\item{xlab}{a title for the x axis}
+
+\item{ylab}{a title for the y axis}
+
+\item{...}{further arguments passed to plot.default}
 }
 \description{
-Print function for objects of class "logdensity"
+Plot density and log-density estimates
+}
+\seealso{
+\code{\link[graphics]{plot.default}}, \code{\link[stats]{integrate}}
 }

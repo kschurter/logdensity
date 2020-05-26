@@ -2,18 +2,18 @@
 % Please edit documentation in R/printlogdensity.R
 \name{print.logdensity}
 \alias{print.logdensity}
-\title{Print function for objects of class "logdensity"}
+\title{Print log-density estimates}
 \usage{
 \method{print}{logdensity}(
-  z,
+  x,
   digits = max(3L, getOption("digits") - 3L),
-  max = 6 * ncol(m),
+  max = 100,
   quote = FALSE,
   ...
 )
 }
 \arguments{
-\item{z}{a logdensity object}
+\item{x}{a logdensity object}
 
 \item{digits}{minimal number of significant digits}
 
@@ -21,11 +21,14 @@
 
 \item{quote}{logical, indicating whether strings should be printed with surrounding quotes}
 
-\item{...}{Further arguments passed to print()}
+\item{...}{further arguments passed to print()}
 }
 \value{
-Invisibly returns z
+invisibly returns x
 }
 \description{
-Print function for objects of class "logdensity"
+Print log-density estimates
+}
+\seealso{
+\code{\link{print.default}}
 }

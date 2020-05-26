@@ -11,13 +11,13 @@ evalkernel(
 )
 }
 \arguments{
-\item{u}{Numeric array}
+\item{u}{numeric array}
 
-\item{kernel}{Character string specifying name of kernel}
+\item{kernel}{character string specifying name of kernel}
 }
 \value{
 array with same dimensions as u containing kernel evaluated at u.
-Note: NA values of u return evaluate to 0.
+Note: NA values of u evaluate to 0.
 }
 \description{
 Evaluate a kernel function
