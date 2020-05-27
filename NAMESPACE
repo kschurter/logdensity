@@ -2,6 +2,7 @@
 
 S3method(plot,logdensity)
 S3method(print,logdensity)
+export(bellpoly)
 export(evalkernel)
 export(logdensity)
 export(logdensity.fit)

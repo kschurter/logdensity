@@ -21,7 +21,7 @@
 #' in addition to its derivative(s).
 #' @param exact logical indicating whether an exact solution should be used 
 #' (if available) or numerical integration. Exact solution currently only
-#' available with kernel and local linear approximation.
+#' available with epanechnikov kernel and local linear approximation.
 #' @param ... Further arguments supplied to \code{g} and \code{dg}
 #'
 #' @return A numeric vector containing the log-density (if \code{logf == TRUE}) and its derivatives
