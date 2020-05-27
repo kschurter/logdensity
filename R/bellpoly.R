@@ -4,7 +4,7 @@
 #' Bell polynomials. The complete Bell polynomial is the sum of the 
 #' partial Bell polynomials. The partial polynomials are evaluted using
 #' the recurrence relation
-#' \deqn{k\, B_{n,k}(x_1,\dots,x_{n-k+1}) = \sum_{r=k-1}^{n-1}\binom{n}{r}x_{n-r}B_{r,k-1}(x_1,\dots,x_{r-k+2})}
+#' \deqn{k\, B_{n,k}(x_1,\dots,x_{n-k+1}) = \sum_{r=k-1}^{n-1}{n \choose r}x_{n-r}B_{r,k-1}(x_1,\dots,x_{r-k+2})}
 #' with \eqn{B_{0,0} = 1}.
 #'
 #' @param x a matrix or object that can be coerced into one by \code{as.matrix}
@@ -14,6 +14,7 @@
 #' @return \code{bellpoly} returns a vector or matrix matching the dimensions of \code{x} that 
 #' contains the value of the partial Bell polynomial evaluated at columns of \code{as.matrix(x)}.
 #' @export
+#' @concept bell polynomial combinatoric
 #'
 #' @examples
 #' n <- 5

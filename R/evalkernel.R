@@ -7,7 +7,8 @@
 #' Note: \code{NA} values of \code{u} evaluate to 0.
 #' 
 #' @export
-evalkernel <- function(u, kernel = c("epanechnikov","gaussian", "triweight", "uniform", "triangle", "cosinus", "quartic")){
+evalkernel <- function(u, kernel = c("epanechnikov","gaussian", "triweight", "uniform",
+                                     "triangle", "cosinus", "quartic")){
   kernel <- match.arg(kernel)
   rval <- switch(kernel,
                  gaussian = 1 / sqrt(2 * pi) * exp(-(u^2) / 2),

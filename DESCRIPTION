@@ -9,7 +9,9 @@ Description: This package contains functions that estimate the logarithm of an u
     near the boundary of the support of the density and can be guaranteed to be nonnegative. Details can be found in
     Pinske and Schurter (2020) "Estimates of derivatives of (log) densities and related objects."
 Imports:
-    parallel
+    graphics,
+    parallel,
+    stats
 License: GNU General Public License Version 3 + file LICENSE
 Encoding: UTF-8
 LazyData: true

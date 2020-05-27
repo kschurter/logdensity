@@ -22,7 +22,7 @@ Evaluates the partial Bell polynomials, also known as the incomplete
 Bell polynomials. The complete Bell polynomial is the sum of the 
 partial Bell polynomials. The partial polynomials are evaluted using
 the recurrence relation
-\deqn{k\, B_{n,k}(x_1,\dots,x_{n-k+1}) = \sum_{r=k-1}^{n-1}\binom{n}{r}x_{n-r}B_{r,k-1}(x_1,\dots,x_{r-k+2})}
+\deqn{k\, B_{n,k}(x_1,\dots,x_{n-k+1}) = \sum_{r=k-1}^{n-1}{n \choose r}x_{n-r}B_{r,k-1}(x_1,\dots,x_{r-k+2})}
 with \eqn{B_{0,0} = 1}.
 }
 \examples{
@@ -40,3 +40,4 @@ bellpoly(x = factorial(k-1))
 bellpoly(x = rep(1, n))
 
 }
+\concept{bell polynomial combinatoric}

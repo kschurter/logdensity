@@ -85,7 +85,7 @@ dat <- rchisq(n = 100, df = 2)
 x <- seq(from = 0, to = 2, length.out = 20)
 
 ## fixed bandwidth
-ld <- logdensity(data = dat, x = x, h = 0.5, m = "epanechnikov", minx = 0, S = 1, logf = TRUE)
+ld <- logdensity(data = dat, x = x, h = 0.5, minx = 0, S = 1)
 print(ld)
 plot(ld)
 
@@ -97,7 +97,7 @@ plot(ld)
 
 ## Faa di Bruno's formula for the density and its derivatives
 deriv <- 0L  # integer between 0 and S (=2 for most recent estimation)
-exp(ld[1, ]) * colSums(bellpoly(ld[-1, ], n = deriv)) # 
+exp(ld[1, ]) * colSums(bellpoly(ld[-1, ], n = deriv))
 
 ### verify formula for deriv = 0, 1, and 2 
 exp(ld[1, ]) * colSums(bellpoly(ld[-1, ], n = 0L))  # density (0th derivative)
@@ -116,3 +116,4 @@ Pinkse, J. and Schurter, K. (2020) "Estimates of derivatives of (log) densities 
 \seealso{
 \code{\link{mapply}}, \code{\link[parallel]{mcmapply}}, \code{\link[stats]{integrate}}, \code{\link[logdensity]{bellpoly}}
 }
+\concept{density smooth}
