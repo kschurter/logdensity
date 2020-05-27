@@ -8,4 +8,4 @@ You can manually download and install the code from this repository or use
     devtools::install_github("kschurter/logdensity")
 
 ## System requirements
-For unix and Mac OS users, parallelization via forking is implemented using the R function `mcmapply`. This will not work on Windows, so make sure the argument `mc.cores` is equal to 1 (the default).
+For Linux and Mac OS users, parallelization via forking is implemented using the R function `mcmapply`. This will not work with Windows, so make sure the argument `mc.cores` is equal to 1 (the default) if you are on a Windows machine.
