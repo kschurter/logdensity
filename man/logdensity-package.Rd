@@ -3,15 +3,19 @@
 \docType{package}
 \name{logdensity-package}
 \alias{logdensity-package}
-\alias{_PACKAGE}
-\title{logdensity: Estimate the (Logarithm) of the Density and its Derivatives}
+\title{The logdensity package}
 \description{
+A package for estimating (log) densities and their derivatives
+}
+\details{
 This package contains functions that estimate the logarithm of an unknown density function from iid data.
-    The estimation strategy is based on a local polynomial appoximation to the log-density. The estimates behave well
-    near the boundary of the support of the density and can be guaranteed to be nonnegative. Details can be found in
-    Pinske and Schurter (2020) "Estimates of derivatives of (log) densities and related objects."
+The estimation strategy is based on a local polynomial appoximation to the logarithm of the density. The
+estimates behave well near the boundary of the support of the density and can be guaranteed to be nonnegative.
+Details can be found in Pinske and Schurter (2020).
 }
 \references{
-Pinkse, J. and Schurter, K. (2020) "Estimates of derivatives of (log) densities and related objects."
+Pinkse, J. and Schurter, K. (2020) ''Estimates of derivatives of (log) densities and related objects.''
 }
-\keyword{internal}
+\author{
+Joris Pinkse and Karl Schurter (maintainer, \email{kschurter@psu.edu})
+}
