@@ -20,10 +20,10 @@ contains the value of the partial Bell polynomial evaluated at columns of \code{
 \description{
 Evaluates the partial Bell polynomials, also known as the incomplete
 Bell polynomials. The complete Bell polynomial is the sum of the 
-partial Bell polynomials. The partial polynomials are evaluted using
-the recurrence relation
-\deqn{k\, B_{n,k}(x_1,\dots,x_{n-k+1}) = \sum_{r=k-1}^{n-1}{n \choose r}x_{n-r}B_{r,k-1}(x_1,\dots,x_{r-k+2})}
-with \eqn{B_{0,0} = 1}.
+partial Bell polynomials over \eqn{k=1,\dots,n}. The partial polynomials
+are evaluted using the recurrence relation
+\deqn{k B_{n,k}(x_1,\dots,x_{n-k+1}) = \sum_{r=k-1}^{n-1}{n \choose r}x_{n-r}B_{r,k-1}(x_1,\dots,x_{r-k+2})}
+with \eqn{B_{0,0} = 1}, \eqn{B_{0,k} = 0} for \eqn{k \ge 1}, and \eqn{B_{n,0} = 0} for \eqn{n \ge 1}.
 }
 \examples{
 n <- 5
@@ -31,7 +31,7 @@ k <- 1:n
 
 ## Idempotent numbers
 bellpoly(k)
-choose(n, k) * k^(n - k)
+choose(n, k) * k^(n - k) # equivalent
 
 ## Stirling numbers (unsigned) of the first kind
 bellpoly(x = factorial(k-1))
