@@ -30,7 +30,7 @@ function logdensity(
     maxx = Inf,                       # top of support
     logf = true,                      # whether to provide log density function estimates
     mz::Function = epanechnikov,      # kernel used to provide estimates of f
-    anal = true                       # whether to be fussy about 
+    anal = true                       # whether to be fussy about checking arguments
     )
     
     n = length(x)
@@ -110,34 +110,3 @@ function logdensity(
     end
     ( log.( num ./ denom), β )
 end
-
-readdata() = [ parse(Float64, fl) for fl in readlines("boundestdata.csv") ]
-
-
-r = readdata()
-
-s = try logdensity(r[1:2], collect(0.0:0.1:0.2), 0.5; S=2)
-    catch
-        println("oops, that doesn't work")
-    end
-
-println("moseying on")
-
-function ugh()
-    println(logdensity(r, collect(0.0:0.1:0.2), 0.5; anal=false ))
-end
-
-@time ugh()
-
-function ugh2()
-   println(logdensity(r, collect(0.0:0.1:0.2), 0.5; S=2, anal=false))
-end
-
-@time ugh2()
-
-
-function ugh3()
-   println(logdensity(r, collect(0.0:0.1:0.2), 0.5; mz=quartic, S=3, anal=false))
-end
-
-@time ugh3()
