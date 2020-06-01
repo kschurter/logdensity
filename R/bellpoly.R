@@ -4,15 +4,15 @@
 #' Bell polynomials. The complete Bell polynomial is the sum of the 
 #' partial Bell polynomials over \eqn{k=1,\dots,n}. The partial polynomials
 #' are evaluted using the recurrence relation
-#' \deqn{k B_{n,k}(x_1,\dots,x_{n-k+1}) = \sum_{r=k-1}^{n-1}{n \choose r}x_{n-r}B_{r,k-1}(x_1,\dots,x_{r-k+2})}
+#' \deqn{k\, B_{n,k}(x_1,\dots,x_{n-k+1}) = \sum_{r=k-1}^{n-1}{n \choose r}x_{n-r}\,B_{r,k-1}(x_1,\dots,x_{r-k+2})}{k B_{n,k}(x_1,\dots,x_{n-k+1}) = \sum_{r=k-1}^{n-1} choose(n,r)x_{n-r}B_{r,k-1}(x_1,\dots,x_{r-k+2})}
 #' with \eqn{B_{0,0} = 1}, \eqn{B_{0,k} = 0} for \eqn{k \ge 1}, and \eqn{B_{n,0} = 0} for \eqn{n \ge 1}.
 #'
 #' @param x a matrix or object that can be coerced into one by \code{as.matrix}
 #' @param n nonnegative integer representing the number of elements
 #' @param k vector of integers no greater than \code{n} representing the sizes of partition
 #'
-#' @return \code{bellpoly} returns a vector or matrix matching the dimensions of \code{x} that 
-#' contains the value of the partial Bell polynomial evaluated at columns of \code{as.matrix(x)}.
+#' @return \code{bellpoly} returns a vector or matrix depending on the dimensions of \code{x} that 
+#' contains the value of the partial Bell polynomial(s) evaluated at columns of \code{as.matrix(x)}.
 #' @export
 #' @concept bell polynomial combinatoric
 #'
