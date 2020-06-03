@@ -1,5 +1,5 @@
 # logdensity
-Local polynomial estimates of the logarithm of the density and its derivatives. For details, please see Pinkse, J. and Schurter, K. (2020) "[Estimates of derivatives of (log) densities and related objects.](http://personal.psu.edu/kes380/files/boundest.pdf)" Code is currently provided for R and Julia. Stata, Matlab, and Python are coming soon.
+Local polynomial estimates of the logarithm of the density and its derivatives. For details, please see Pinkse, J. and Schurter, K. (2020) "[Estimates of derivatives of (log) densities and related objects.](http://arxiv.org/abs/2006.01328)" Code is currently provided for R and Julia. Stata, Matlab, and Python are coming soon.
 
 ## Installation
 You can manually download and install the code from this repository or use the following R script to install the files as an R package.
