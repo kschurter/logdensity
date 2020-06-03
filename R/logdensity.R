@@ -139,6 +139,6 @@ logdensity <- function(data, x, h, g, dg, m = "epanechnikov", minx = -Inf, maxx 
   }else{
     ld <- logdensity.fit(data = data, x = x, h = h, g = g, dg = dg, m = m, minx = minx, maxx = maxx, logf = logf, exact = (kern==1L), ...)
   }
-  z <- structure(ld, x = x, n = length(data), h = h, call = cl, dim = c(S+1, numCol), class = c("logdensity", "matrix"))
+  z <- structure(ld, x = x, n = length(data), h = h, call = cl, dim = c(length(ld)/numCol, numCol), class = c("logdensity", "matrix"))
   return(z)
 }
