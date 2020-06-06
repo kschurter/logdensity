@@ -24,7 +24,7 @@
 #' available with epanechnikov kernel and local linear approximation.
 #' @param ... Further arguments supplied to \code{g} and \code{dg}
 #'
-#' @return A numeric vector containing the log-density (if \code{logf == TRUE}) and its derivatives
+#' @return \code{logdensity.fit} returns a numeric vector containing the log-density (if \code{logf == TRUE}) and its derivatives.
 #' 
 #' @rdname logdensity
 #' 

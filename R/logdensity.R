@@ -30,13 +30,15 @@
 #' (default), \code{mapply} will be used to loop over \code{x}, instead.
 #' @param ... further arguments supplied to \code{g} and \code{dg}
 #'
-#' @return an object of class \code{logdensity} which inherits from \code{matrix}.
+#' @return \code{logdensity} returns an object of class \code{logdensity} which inherits from \code{matrix}.
 #'     The \code{S+1} by \code{length(x)} matrix of estimated log-densities (\code{NA} unless \code{logf}
 #'     is \code{TRUE}) and derivatives has the following additional attributes:
-#'     \code{x}       vector of points at which the estimates were computed
-#'     \code{n}       number of non-missing observations used in estimation
-#'     \code{h}       bandwidth(s) used
-#'     \code{call}    matched call
+#'     \itemize{
+#'         \item \code{x}       vector of points at which the estimates were computed,
+#'         \item \code{n}       number of non-missing observations used in estimation,
+#'         \item \code{h}       bandwidth(s) used,
+#'         \item \code{call}    matched call
+#'     }
 #'
 #' @examples
 #' dat <- rchisq(n = 100, df = 2)

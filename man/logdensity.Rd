@@ -65,15 +65,17 @@ in addition to its derivative(s).}
 available with epanechnikov kernel and local linear approximation.}
 }
 \value{
-an object of class \code{logdensity} which inherits from \code{matrix}.
+\code{logdensity} returns an object of class \code{logdensity} which inherits from \code{matrix}.
     The \code{S+1} by \code{length(x)} matrix of estimated log-densities (\code{NA} unless \code{logf}
     is \code{TRUE}) and derivatives has the following additional attributes:
-    \code{x}       vector of points at which the estimates were computed
-    \code{n}       number of non-missing observations used in estimation
-    \code{h}       bandwidth(s) used
-    \code{call}    matched call
+    \itemize{
+        \item \code{x}       vector of points at which the estimates were computed,
+        \item \code{n}       number of non-missing observations used in estimation,
+        \item \code{h}       bandwidth(s) used,
+        \item \code{call}    matched call
+    }
 
-A numeric vector containing the log-density (if \code{logf == TRUE}) and its derivatives
+\code{logdensity.fit} returns a numeric vector containing the log-density (if \code{logf == TRUE}) and its derivatives.
 }
 \description{
 \code{logdensity.fit} is intended to be called from within
