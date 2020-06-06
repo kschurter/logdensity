@@ -2,8 +2,8 @@
 #'
 #' @param data numeric vector of observations
 #' @param x points at which to estimate (if shorter than h, recycled to length
-#' of h)
-#' @param h bandwidth (if shorter than x, recycled to the length of x)
+#' of h). \code{logdensity.fit} only accepts scalar x.
+#' @param h bandwidth (if shorter than x, recycled to the length of x). \code{logdensity.fit} only accepts scalar x.
 #' @param g function of \code{u}, \code{zl}, and \code{zr} that must be equal to an \code{S}-length vector of
 #' 0's at \code{zl = max((minx-x)/h,-1)} and \code{zr = min((maxx-x),1)}, where \code{S} is the order
 #' of the local polynomial approximation to the log-density. Function must be
@@ -54,22 +54,17 @@ logdensity.fit <- function(data, x, h, g, dg, m, minx, maxx, logf, exact, ...){
   if(!all(is.finite(R))){
     stop("Encountered a non-finite value of g", domain = NA)
   }
-  l <-  colSums(dgu) / h
+  l <-  colSums(dgu)
   if(!all(is.finite(l))){
     stop("Encountered a non-finite value of dg", domain = NA)
   }
   beta <- numeric(S + 1)
-  beta[-1] <- drop(solve(R, l)) * factorial(0:(S-1)) / h^(0:(S-1))
+  beta[-1] <- drop(solve(R, l)) * factorial(0:(S-1)) / h^(1:S)
   if(logf){
     if(S == 1 & exact){ # Use an exact solution for denominator instead of numerical integration
       num <- 0.75 * sum(1-u^2) / length(data) 
       fn <- function(u) (exp(beta[-1] * h * u) * (2 + beta[-1] * h * u * (-2 + beta[-1] * h * u)))/(beta[-1] * h)^3
       den <- 0.75 * (fn(-1 * zl) - fn(zr) + (exp(zr * beta[-1] * h) - exp(-1*zl * beta[-1] * h))/(beta[-1] * h))
-      # Exact solution for S=2 and "epanechnikov"
-      # fn <- function(u, b1, b2){
-      #     -0.375 * exp(-b1^2 / 2 / b2) * ( 2 * exp((b1 + h * u * b2)^2 / (2 * b2)) * sqrt(b2) * (-b1 + h * u * b2) + sqrt(2 * pi) * (b1^2-b2 * (1 + h^2 * b2)) * erfi((b1 + h * u * b2) / sqrt(2 * b2)) ) / (h^3 * b2^(2.5))
-      # }
-      # den <- diff(fn(c(-zl, zr), beta[2], beta[3]+0i))
     }else{ # Use numerical integration
       num <- sum(m(u)) / length(data)
       den <-  tryCatch(integrate(function(w) m(w) * exp( outer(w * h, 1:S, `^`) %*% (beta[-1] / factorial(1:S))), lower = -1*zl, upper = zr)$value,
