@@ -123,11 +123,11 @@ logdensity <- function(data, x, h, g, dg, m = "epanechnikov", minx = -Inf, maxx 
       match.fun(m)
     }
   }
-  if(any(x < minx) || any(x > maxx)){
+  if(any(x < minx) || any(x > maxx) || any(!is.finite(x))){
     warning(gettextf("Ignoring attempt(s) to estimate density outside the support [%g, %g].", minx, maxx))
-    x <- x[(x >= minx) & (x<= maxx)]
+    x <- x[(x >= minx) & (x<= maxx) & is.finite(x)]
     if(length(x)==0){
-      stop("No values of x lie within the support.")
+      stop("No finite values of x lie within the support.")
     }
   }
   cl <- match.call()
