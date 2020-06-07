@@ -58,7 +58,7 @@ logdensity.fit <- function(data, x, h, g, dg, m, minx, maxx, logf, exact, ...){
   if(!all(is.finite(l))){
     stop("Encountered a non-finite value of dg", domain = NA)
   }
-  beta <- numeric(S + 1)
+  beta <- rep(NA_real_, S+1)
   beta[-1] <- drop(solve(R, l)) * factorial(0:(S-1)) / h^(1:S)
   if(logf){
     if(S == 1 & exact){ # Use an exact solution for denominator instead of numerical integration
