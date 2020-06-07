@@ -86,6 +86,7 @@ logdensity <- function(data, x, h, g, dg, m = "epanechnikov", minx = -Inf, maxx 
   if(any(h <= 0)){
     stop("h is not positive.")
   }
+  data <- unlist(data, use.names = FALSE)
   if(any(is.na(data))){
     na_data <- is.na(data)
     data <- data[!na_data]

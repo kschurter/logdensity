@@ -26,9 +26,9 @@ logdensity.fit(data, x, h, g, dg, m, minx, maxx, logf, exact, ...)
 \item{data}{numeric vector of observations}
 
 \item{x}{points at which to estimate (if shorter than h, recycled to length
-of h)}
+of h). \code{logdensity.fit} only accepts scalar x.}
 
-\item{h}{bandwidth (if shorter than x, recycled to the length of x)}
+\item{h}{bandwidth (if shorter than x, recycled to the length of x). \code{logdensity.fit} only accepts scalar x.}
 
 \item{g}{function of \code{u}, \code{zl}, and \code{zr} that must be equal to an \code{S}-length vector of
 0's at \code{zl = max((minx-x)/h,-1)} and \code{zr = min((maxx-x),1)}, where \code{S} is the order
