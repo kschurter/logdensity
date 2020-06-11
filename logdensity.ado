@@ -224,7 +224,6 @@ void PS_est(string scalar varname, string scalar touse, string scalar kernel, st
 
 		/*Backout beta*/
 		dgu = mean(dgu):/(h:^2)
-		beta = qrinv(store')*dgu'
 		beta = lusolve(store',dgu')
 
 		/*Rosenblatt Parzen Kernel Estimator*/
