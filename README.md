@@ -1,5 +1,5 @@
 # logdensity
-Local polynomial estimates of the logarithm of the density and its derivatives. For details, please see Pinkse, J. and Schurter, K. (2020) "[Estimates of derivatives of (log) densities and related objects.](http://arxiv.org/abs/2006.01328)" Code is provided for MATLAB, Python, R, and Stata. The [Julia package](https://github.com/NittanyLion/LogDensity.jl) has its own repository, and can be installed using Julia's package manager (e.g. type the character `]` in the REPL and then run the command `add LogDensity`.)
+Local polynomial estimates of the logarithm of the density and its derivatives. For details, please see Pinkse, J. and Schurter, K. (2022) "[Estimates of derivatives of (log) densities and related objects.](https://doi.org/10.1017/S0266466621000529)" Code is provided for MATLAB, Python, R, and Stata. The [Julia package](https://github.com/NittanyLion/LogDensity.jl) has its own repository, and can be installed using Julia's package manager (e.g. type the character `]` in the REPL and then run the command `add LogDensity`.)
 
 ## Installation
 You can manually download and install the code from this repository. The MATLAB function is defined in `logdensity.m`. Documentation for the MATLAB function can be accessed within MATLAB using `help logdensity` if the function file is in the current directory or in MATLAB's search path.
